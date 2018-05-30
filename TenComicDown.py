@@ -1,4 +1,9 @@
 #coding=utf8
+
+#腾讯的漫画ID：
+#狐妖小红娘 ：518333
+#海贼王 ： 505430
+#小绿和小蓝 ； 536332
 import requests
 import json
 import selenium.webdriver
@@ -73,13 +78,22 @@ def comic(url):
 
 
 def download(comics):
+    #print (comics)
 
     title=comics['title']
+    #print (title)
     pattern = re.compile(r"(.*?)-在线漫画",re.S)
+    pattern2 = re.compile(r"《(.*?)》",re.S)
     title = re.findall(pattern,title)
     title = title[0]
+    a = re.findall(pattern2,title)
     urls=comics['url']
-    directory='/Users/cube.z/Hello_world/Redred/'+title
+    directory =  os.getcwd()
+    if os.path.exists(directory + '/'+a[0]):
+        print ("dir exists")
+    else :
+        os.mkdir(directory + '/'+a[0])
+    directory=directory + '/'+a[0]+ '/'+title
 
     if os.path.exists(directory):
         for download_link in urls:
@@ -125,8 +139,8 @@ if __name__=="__main__":
 
     url='http://ac.tc.qq.com/store_file_download?buid=15017&uin=1422363399&dir_path=/&name=27_20_56_3faad5b60275c2829819a8c41cb0a919_953.ori'
 
-    for i in range(277,300):
-        url='http://ac.qq.com/ComicView/index/id/518333/cid/'+str(i)
+    for i in range(150,180):
+        url='http://ac.qq.com/ComicView/index/id/505430/cid/'+str(i)
 
         print ('Now Analyzing  Chapter '+ str(i)+',waiting for 60 seconds')
         #time.sleep(random.randint(50, 60))
